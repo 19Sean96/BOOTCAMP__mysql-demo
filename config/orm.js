@@ -12,12 +12,11 @@ const orm = {
     },
 
     insertOne: function(tableInput, cols, vals, cb) {
-        // const queryString = "INSERT INTO ?? (?, ?) VALUES (? ?)";
         let colString = JSON.stringify(cols).replace(/"/g, "");
         colString = colString.substring(1, colString.length - 1);
         let queryString = `INSERT INTO ${tableInput} (${colString}) VALUES (?, ?)`;
-        devoured = (vals.devoured === 'true') ? 1 : 0;
-        name = Object.values(vals)[0];
+        const devoured = (vals.devoured === 'true') ? 1 : 0;
+        const name = Object.values(vals)[0];
 
         connection.query(queryString, [name, devoured], function(err, result) {
           if (err) console.log(err, result);
@@ -25,12 +24,16 @@ const orm = {
         });
     },
 
-    updateOne: function(tableInput, col, condition, cb) {
-        const queryString = "UPDATE ?? SET ? WHERE ?";
-        connection.query(queryString, [tableInput, col, condition], function(
-            err,
-            result
-        ) {
+    updateOne: function(tableInput, cols, condition, cb) {
+        // const queryString = "UPDATE ?? SET ? WHERE ?";
+
+        const colKeys = Object.keys(cols);
+        const colVals = Object.values(cols);
+        console.log(colKeys);
+        console.log(colVals);
+        const queryString = `UPDATE ${tableInput} SET ${colKeys[1]} = ${colVals[1]} WHERE ${condition}`;
+        console.log(queryString);
+        connection.query(queryString, (err,result) => {
             if (err) throw err;
             console.log(result);
             cb(result);

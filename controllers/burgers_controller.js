@@ -6,10 +6,13 @@ const router = express.Router();
 
 router.get("/", (req,res) => {
     burger.selectAll(data => {
+        data.forEach(burger => {
+            burger.devoured = (burger.devoured == 1) ? true : false;
+        });
         const hbsObj = {
             burgers: data
         };
-        console.log("HELLOHELLOHELLOHELLO" + hbsObj);
+        console.log(hbsObj);
         res.render("index", hbsObj);
     })
 });
@@ -28,11 +31,8 @@ router.put("/api/burgers/:id", (req,res) => {
     let condition = `id = ${req.params.id}`;
 
     console.log("condition", condition);
-
-    burger.updateOne({
-        burger_name: req.body.name,
-        devoured: req.body.devoured
-    }, condition, result => {
+    console.log(req.body);
+    burger.updateOne(req.body, condition, result => {
         if (result.changedRows == 0) {
             return res.status(404).end();
         } else {

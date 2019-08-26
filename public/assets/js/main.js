@@ -1,7 +1,21 @@
 $(function() {
     $(".link").click(function(e) {
         e.preventDefault();
-        alert("clicked");
+        const id = $(this).data('link');
+        const item = $(`#item${id}`).data('name');
+        console.log(item);
+        const burgerObj = {
+            burger_name: item,
+            devoured: true
+        }
+
+        $.ajax(`/api/burgers/${id}`, {
+            type: "PUT",
+            data: burgerObj,
+        }).then(() => {
+            // Reload the page to get the updated list
+            location.reload();
+        });
     });
 
     $(".btn").click(function(e) {
@@ -13,14 +27,17 @@ $(function() {
         };
 
         // Send the PUT request.
-        $.ajax("/api/burgers", {
-            type: "POST",
-            data: burgerObj
-        }).then(function() {
-            console.log("Data", burgerObj);
-            // Reload the page to get the updated list
-            location.reload();
-        });
+        if (burger !== '') {
+            $.ajax("/api/burgers", {
+                type: "POST",
+                data: burgerObj
+            }).then(() => {
+                // Reload the page to get the updated list
+                location.reload();
+            });
+        } else {
+            alert("You need to place an order!");
+        }
     });
 
     // $('#burgerInput').keyup(function (e) {

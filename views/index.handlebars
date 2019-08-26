@@ -19,22 +19,10 @@
 <div class="container">
     <div class="burgers-container">
         <h3 class="burger-title">Burgers To Eat:</h3>
-        <ul>
-            <li>Big Mac <a href="#" class="link"> eat it!</a></li>
-            <li>Whopper Jr. <a href="#" class="link"> eat it!</a></li>
-            <li>Double Cheese Burger <a href="#" class="link"> eat it!</a></li>
-            <li>
-                burger 
-                <a href="#" class="link">
-                     eat it!
-                </a>
+        <ul>{{#each burgers}}{{#unless devoured}}
+            <li id="item{{this.id}}" data-name="{{this.burger_name}}">{{this.burger_name}}<a href="#" class="link" data-link="{{this.id}}">eat it!</a>
             </li>
-            <li>burger <a href="#" class="link"> eat it!</a></li>
-            <li>burger <a href="#" class="link"> eat it!</a></li>
-            <li>burger <a href="#" class="link"> eat it!</a></li>
-            <li>burger <a href="#" class="link"> eat it!</a></li>
-            <li>burger <a href="#" class="link"> eat it!</a></li>
-            <li>burger <a href="#" class="link"> eat it!</a></li>
+            {{/unless}}{{/each}}
         </ul>
     </div>
     <form id="burger-entry">
@@ -49,23 +37,11 @@
     </form>
     <div class="burgers-container">
         <h3 class="burger-title">Burgers Eaten:</h3>
-        <ul>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
-            <li>Big Mac</li>
+        <ul>{{#each burgers}}{{#if devoured}}
+            <li id="{{this.id}}">{{this.burger_name}}</li>
+            {{/if}}{{/each}}
         </ul>
+
     </div>
 </div>
 
