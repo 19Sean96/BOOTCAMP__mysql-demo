@@ -1,5 +1,6 @@
 const express = require('express');
 const burger = require('../models/burger');
+const util = require('util');
 
 const router = express.Router();
 
@@ -8,19 +9,17 @@ router.get("/", (req,res) => {
         const hbsObj = {
             burgers: data
         };
-        console.log(hbsObj);
+        console.log("HELLOHELLOHELLOHELLO" + hbsObj);
         res.render("index", hbsObj);
     })
 });
 
 router.post("/api/burgers", (req,res) => {
+
     burger.insertOne([
         "burger_name",
         "devoured"
-    ], [
-        req.body.name,
-        req.body.devoured
-    ], result => {
+    ], req.body, result => {
         res.json({id:result.insertId});
     });
 });
